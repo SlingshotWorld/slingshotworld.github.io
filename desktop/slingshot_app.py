@@ -11,13 +11,16 @@ import webbrowser
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 APP_NAME = "SlingshotWorld"
-HTML_FILE = "SlingshotWorld.html"
+HTML_FILE = "index.html"  # a repo gyokereben levo app
 PREFERRED_PORT = 8765  # port fix => acelasi "origin" => datele se pastreaza
 
 
 def resource_dir():
-    # Cand e impachetat cu PyInstaller, fisierele sunt in sys._MEIPASS
-    return getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    # Cand e impachetat cu PyInstaller, fisierele sunt in sys._MEIPASS.
+    # Altfel (rulare din sursa) index.html e in radacina repo-ului, un nivel mai sus.
+    if hasattr(sys, "_MEIPASS"):
+        return sys._MEIPASS
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def data_dir():
